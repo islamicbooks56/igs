@@ -1,0 +1,90 @@
+body {
+  background-color: #f8f9fa;
+  color: #212529;
+}
+
+/* HEADER */
+.site-title {
+  font-size: 1.6rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+/* KİTAP KARTI */
+.book-card {
+  background: #fff;
+  border: 1px solid #dee2e6;
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 32px;
+}
+
+.book-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.book-description {
+  font-size: 0.9rem;
+  color: #6c757d;
+  margin-bottom: 16px;
+}
+
+/* BÖLÜM SATIRI */
+.part-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px solid #f0f0f0;
+  gap: 8px;
+}
+
+.part-row:last-of-type {
+  border-bottom: none;
+}
+
+.part-name {
+  flex: 1;
+  font-size: 0.9rem;
+}
+
+.part-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.download-count {
+  font-size: 0.75rem;
+  color: #adb5bd;
+  white-space: nowrap;
+}
+
+/* AUDIO PLAYER */
+.audio-wrapper {
+  padding: 10px 0 4px;
+  display: none;
+}
+
+.audio-wrapper.active {
+  display: block;
+}
+
+.audio-wrapper iframe {
+  width: 100%;
+  height: 60px;
+}
+
+/* MOBİL */
+@media (max-width: 576px) {
+  .book-card {
+    padding: 16px;
+  }
+
+  .part-name {
+    font-size: 0.82rem;
+  }
+}
