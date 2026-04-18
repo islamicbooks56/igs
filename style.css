@@ -73,9 +73,9 @@ body {
   display: block;
 }
 
-.audio-wrapper iframe {
+.audio-wrapper audio {
   width: 100%;
-  height: 60px;
+  height: 40px;
 }
 
 /* MOBİL */
