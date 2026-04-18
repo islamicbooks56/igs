@@ -7,7 +7,6 @@ const books = [
     title: "İncil'den Sözler",
     description: '',
     fullUrl: 'https://archive.org/compress/incildensozler/formats=VBR%20MP3&file=/incildensozler.zip',
-    embedBase: 'https://archive.org/embed/incildensozler?playlist=1&list_height=0&start_track=',
     downloadBase: 'https://archive.org/download/incildensozler/',
     parts: [
       { part: '1', name: 'Bölüm 1', file: '01-incil.mp3' },
@@ -26,7 +25,6 @@ const books = [
     title: 'Kitap 2',
     description: '',
     fullUrl: '',
-    embedBase: '',
     downloadBase: '',
     parts: []
   }
@@ -46,8 +44,8 @@ function render() {
     card.className = 'book-card';
 
     let partsHTML = '';
-    book.parts.forEach((p, index) => {
-      const downloadUrl = book.downloadBase + p.file;
+    book.parts.forEach(p => {
+      const url = book.downloadBase + p.file;
       partsHTML += `
         <div class="part-row">
           <span class="part-name">${p.name}</span>
@@ -55,11 +53,11 @@ function render() {
             <button class="btn btn-sm btn-outline-secondary btn-play"
               data-book="${book.id}"
               data-part="${p.part}"
-              data-embed="${book.embedBase}${index}">
+              data-url="${url}">
               <i class="fa-solid fa-play fa-xs"></i>
             </button>
-            <a class="btn btn-sm btn-outline-primary btn-download"
-              href="${downloadUrl}"
+            <a class="btn btn-sm btn-outline-primary"
+              href="${url}"
               data-book="${book.id}"
               data-part="${p.part}">
               <i class="fa-solid fa-download fa-xs"></i>
@@ -67,7 +65,7 @@ function render() {
           </div>
         </div>
         <div class="audio-wrapper" id="audio-${book.id}-${p.part}">
-          <iframe id="iframe-${book.id}-${p.part}" src="" frameborder="0" allowfullscreen></iframe>
+          <audio id="audio-el-${book.id}-${p.part}" controls></audio>
         </div>
       `;
     });
@@ -75,7 +73,7 @@ function render() {
     card.innerHTML = `
       <div class="book-title">${book.title}</div>
       ${book.description ? `<div class="book-description">${book.description}</div>` : ''}
-      <a class="btn btn-sm btn-primary mb-3 btn-download"
+      <a class="btn btn-sm btn-primary mb-3"
         href="${book.fullUrl}"
         data-book="${book.id}"
         data-part="full">
@@ -94,35 +92,35 @@ function render() {
 // BUTON OLAYLARI
 // =====================
 function bindEvents() {
-  document.querySelectorAll('.btn-download').forEach(btn => {
-    btn.addEventListener('click', () => {
-    });
-  });
-
   document.querySelectorAll('.btn-play').forEach(btn => {
     btn.addEventListener('click', () => {
       const bookId = btn.dataset.book;
       const part = btn.dataset.part;
-      const embedUrl = btn.dataset.embed;
+      const url = btn.dataset.url;
       const wrapperId = `audio-${bookId}-${part}`;
-      const iframeId = `iframe-${bookId}-${part}`;
+      const audioEl = document.getElementById(`audio-el-${bookId}-${part}`);
 
+      // Diğer tüm playerları kapat
       document.querySelectorAll('.audio-wrapper').forEach(w => {
         if (w.id !== wrapperId) {
           w.classList.remove('active');
-          w.querySelector('iframe').src = '';
+          const a = w.querySelector('audio');
+          a.pause();
+          a.src = '';
         }
       });
 
+      // Bu playerı aç/kapat
       const wrapper = document.getElementById(wrapperId);
       const isOpening = !wrapper.classList.contains('active');
       wrapper.classList.toggle('active');
 
-      const iframe = document.getElementById(iframeId);
       if (isOpening) {
-        iframe.src = embedUrl;
+        audioEl.src = url;
+        audioEl.play();
       } else {
-        iframe.src = '';
+        audioEl.pause();
+        audioEl.src = '';
       }
     });
   });
