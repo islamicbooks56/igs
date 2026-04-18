@@ -4,7 +4,7 @@
 const books = [
   {
     id: 1,
-    title: "İncil'den Güzel Sözler",
+    title: "İncil'den Sözler",
     description: '',
     fullUrl: 'https://archive.org/compress/incildensozler/formats=VBR%20MP3&file=/incildensozler.zip',
     embedBase: 'https://archive.org/embed/incildensozler?playlist=1&list_height=0&start_track=',
@@ -31,17 +31,6 @@ const books = [
     parts: []
   }
 ];
-
-// =====================
-// GA EVENT
-// =====================
-function logEvent(action, bookId, part) {
-  if (typeof gtag === 'undefined') return;
-  gtag('event', action, {
-    book_id: bookId,
-    part: part
-  });
-}
 
 // =====================
 // RENDER
@@ -107,7 +96,6 @@ function render() {
 function bindEvents() {
   document.querySelectorAll('.btn-download').forEach(btn => {
     btn.addEventListener('click', () => {
-      logEvent('download', parseInt(btn.dataset.book), btn.dataset.part);
     });
   });
 
@@ -133,7 +121,6 @@ function bindEvents() {
       const iframe = document.getElementById(iframeId);
       if (isOpening) {
         iframe.src = embedUrl;
-        logEvent('play', bookId, part);
       } else {
         iframe.src = '';
       }
