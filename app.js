@@ -4,7 +4,7 @@
 const books = [
   {
     id: 1,
-    title: "İncil'den Sözler",
+    title: "İncil'den Güzel Sözler",
     description: '',
     fullUrl: 'https://archive.org/compress/incildensozler/formats=VBR%20MP3&file=/incildensozler.zip',
     downloadBase: 'https://archive.org/download/incildensozler/',
